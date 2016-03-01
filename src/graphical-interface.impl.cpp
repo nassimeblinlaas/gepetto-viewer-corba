@@ -58,6 +58,51 @@ namespace graphics {
 	}
       }
 
+      gepetto::corbaserver::floatSeq*  GraphicalInterface::getCameraVectors(float windowIDCorba, const char* cameraNameCorba)
+      throw (Error)
+      {
+	      try {
+		      WindowManagerPtr_t pt = windowsManager_->getWindowManager((short)windowIDCorba);
+		      //osgViewer::Viewer::Views ves;
+		      //pt->getViewerClone()->getViews(ves);
+		      osg::Matrixd& viewMatrix_ = pt->getViewerClone()->getCamera()->getViewMatrix();
+
+
+		      /*
+		      // choses the first camera for now
+		      osgViewer::View* ve = *ves.begin();
+		      osg::Vec3f  zer;      zer.set(0,0,0);
+		      osg::Vec3f& ref_zer = zer;
+		      const osg::CoordinateFrame& CFref = ve->getCameraManipulator()->getCoordinateFrame(ref_zer);
+		      //*/
+
+		      gepetto::corbaserver::floatSeq *dofArray;
+		      std::size_t dim = 4;
+		      dofArray = new gepetto::corbaserver::floatSeq();
+		      dofArray->length(dim);
+
+		      for(std::size_t i=0; i<4; i++){
+			      (*dofArray)[i] = viewMatrix_.getRotate()[i];
+			      /*
+				 (*dofArray)[i] = ve->getCameraManipulator()->getSideVector(CFref)[i];
+				 (*dofArray)[i+3] = ve->getCameraManipulator()->getFrontVector(CFref)[i];
+				 (*dofArray)[i+6] = ve->getCameraManipulator()->getUpVector(CFref)[i];
+			      //*/
+
+			      /*
+				 (*dofArray)[i] = viewMatrix_(i,0);
+				 (*dofArray)[i+3] = viewMatrix_(i+3,1);
+				 (*dofArray)[i+6] = viewMatrix_(i+6,2);
+			      //*/
+		      }
+
+		      return dofArray;
+	      } catch (const std::exception& exc) {
+		      throw Error (exc.what ());
+      	      }
+      }
+
+
       void GraphicalInterface::createScene (const char* sceneNameCorba)
           throw (Error)
       {

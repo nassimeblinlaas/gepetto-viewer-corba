@@ -45,6 +45,7 @@ typedef sequence<Position> PositionSeq;
     unsigned long createWindow(in string name) raises (Error);
     unsigned long getWindowID (in string name) raises (Error);
 
+    floatSeq getCameraVectors(in float windwIDCorba, in string cameraNameCorba) raises (Error);
 
     /// Print names of nodes on the SceneViewer-corbaserver terminal
     /// and return them in an array

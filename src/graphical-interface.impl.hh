@@ -56,6 +56,7 @@ public:
   virtual void createSceneWithFloor(const char* sceneNameCorba)  throw (Error);
   virtual bool addSceneToWindow(const char* sceneNameCorba, const WindowID windowId)  throw (Error);
 
+  virtual gepetto::corbaserver::floatSeq* getCameraVectors(float windowIDCorba, const char* cameraNameCorba) throw (Error);
 
   virtual bool addFloor(const char* floorName) throw (Error);
 

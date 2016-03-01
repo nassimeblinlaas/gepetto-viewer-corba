@@ -74,6 +74,7 @@ public:
     void createSceneWithFloor(const char* sceneName) ;
     bool addSceneToWindow(const char* sceneName, const WindowID windowId) ;
 
+    gepetto::corbaserver::floatSeq* getCameraVectors(float windowIDCorba, const char* cameraNameCorba);
 
     bool addBox(const char* boxName, const float boxSize1, const float boxSize2, const float boxSize3, const value_type* color);
     //bool addBox(const char* boxName, float boxSize1, float boxSize2, float boxSize3) ;
